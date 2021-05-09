@@ -1,6 +1,9 @@
 package test;
 import org.junit.Test;
 import main.BalancedBrackets;
+
+import javax.sql.rowset.BaseRowSet;
+
 import static org.junit.Assert.*;
 
 public class BalancedBracketsTest {
@@ -22,34 +25,52 @@ public class BalancedBracketsTest {
     }
 
     @Test
-    public void unbalancedBracketsReturnFalse() {
-        assertFalse(BalancedBrackets.hasBalancedBrackets("[[]"));
+    public void stringsInBracketsReturnsTrue() {
+        assertTrue(BalancedBrackets.hasBalancedBrackets("[Burritos]"));
     }
 
     @Test
-    public void balancedBracketsWithTextInsideReturnsTrue() {
-        assertTrue(BalancedBrackets.hasBalancedBrackets("[Text]"));
+    public void stringAndBracketsReturnsTrue() {
+        assertTrue(BalancedBrackets.hasBalancedBrackets("Launch[Code]"));
     }
 
     @Test
-    public void unbalancedBracketsWithTextInsideReturnsFalse() {
-        assertFalse(BalancedBrackets.hasBalancedBrackets("[[Text]"));
+    public void bracketsAndStringReturnsTrue() {
+        assertTrue(BalancedBrackets.hasBalancedBrackets("[]Tacos"));
     }
 
     @Test
-    public void unbalancedBracketsWithTextOutsideReturnsFalse() {
-        assertFalse(BalancedBrackets.hasBalancedBrackets("ejf[[]"));
+    public void twoSetsBracketsReturnsTrue() {
+        assertTrue(BalancedBrackets.hasBalancedBrackets("[]Burritos[]"));
     }
 
     @Test
-    public void balancedBracketsWithTextOutsideReturnsTrue() {
-        assertTrue(BalancedBrackets.hasBalancedBrackets("ejf[]"));
+    public void nestedBracketsReturnTrue() {
+        assertTrue(BalancedBrackets.hasBalancedBrackets("[[Burritos]]"));
     }
 
     @Test
-    public void balancedBracketsWithBracketsOutOfOrderReturnsFalse() {
+    public void reverseOnlyBracketsReturnsFalse() {
         assertFalse(BalancedBrackets.hasBalancedBrackets("]["));
     }
 
+    @Test
+    public void onlyLeftBracketsReturnFalse() {
+        assertFalse(BalancedBrackets.hasBalancedBrackets("[Burritots"));
+    }
 
+    @Test
+    public void wrongOrderBracketsReturnsFalse() {
+        assertFalse(BalancedBrackets.hasBalancedBrackets("Launch]Code["));
+    }
+
+    @Test
+    public void mismatchReturnsFalse() {
+        assertFalse(BalancedBrackets.hasBalancedBrackets("[Burritos[]"));
+    }
+
+    @Test
+    public void otherMismatchingReturnsFalse() {
+        assertFalse(BalancedBrackets.hasBalancedBrackets("]Burritos[]"));
+    }
 }
